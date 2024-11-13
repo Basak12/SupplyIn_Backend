@@ -3,19 +3,6 @@ import {createConnection} from "../db";
 
 const router = Router();
 
-// Statik kullanıcı verisi
-const users = [
-    { id: 1, name: 'John Doe', email: 'john@example.com' },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
-    { id: 3, name: 'Sam Johnson', email: 'sam@example.com' }
-];
-
-/*
-router.get('/users', (req, res) => {
-    res.json(users); // Statik kullanıcıları döndürüyoruz
-});
- */
-
 router.get('/users', (req, res) => {
     const connection = createConnection();
     connection.query('SELECT * FROM users', (err, results) => {
