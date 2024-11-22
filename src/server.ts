@@ -3,7 +3,9 @@ import bodyParser from 'body-parser';
 import userRoutes from './routes/user';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import { createConnection } from './db';
+import supplierRoutes from "./routes/suppliers";
+import purchaseRoutes from "./routes/purchaseResults";
+import criteriaWeightsRoutes from "./routes/criteriaWeights";
 
 dotenv.config();
 
@@ -18,6 +20,9 @@ app.use(cors({
 
 app.use(bodyParser.json());
 app.use('/api', userRoutes);
+app.use('/api', supplierRoutes);
+app.use('/api', purchaseRoutes);
+app.use('/api', criteriaWeightsRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

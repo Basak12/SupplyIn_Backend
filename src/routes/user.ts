@@ -1,7 +1,13 @@
-import { Router } from 'express';
+import express, { Request, Response, Router } from 'express';
 import {createConnection} from "../db";
-
 const router = Router();
+
+interface UserRequestBody {
+    name: string;
+    surname: string;
+    email: string;
+    password: string;
+}
 
 router.get('/users', (req, res) => {
     const connection = createConnection();
@@ -16,7 +22,38 @@ router.get('/users', (req, res) => {
     connection.end();
 });
 
-// Create a user (statik veriler eklemek için kullanılabilir)
+router.post('/users', async (req: Request<{}, {}, UserRequestBody>, res: Response) => {
+    const { name, surname, email, password } = req.body;
+
+    console.log(' req.body', req.body);
+    const connection = createConnection();
+    connection.query('SHOW TABLES', (err, results) => {
+        if (err) {
+            console.error('Error fetching tables:', err);
+        } else {
+            console.log('Tables in database:', results);
+        }
+    });
+    const db = connection.promise();
+
+    try {
+        const query = `
+        INSERT INTO Users (name, surname, email, password) VALUES (?, ?, ?, ?)
+    `;
+        await db.execute(query, [name, surname, email, password]);
+        res.status(201).json({ message: 'User created successfully.' });
+    } catch (error) {
+        console.error('Error creating user:', error);
+        res.status(500).json({ error: `Failed to create user. ${error}` });
+    } finally {
+        connection.end();
+    }
+});
+
+
+
+export default router;
+
 /*
 router.post('/users', (req, res) => {
     const { name, email } = req.body;
@@ -24,5 +61,3 @@ router.post('/users', (req, res) => {
     res.status(201).send('Kullanıcı oluşturuldu');
 });
  */
-
-export default router;
