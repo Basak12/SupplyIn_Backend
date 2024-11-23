@@ -50,14 +50,4 @@ router.post('/users', async (req: Request<{}, {}, UserRequestBody>, res: Respons
     }
 });
 
-
-
 export default router;
-
-/*
-router.post('/users', (req, res) => {
-    const { name, email } = req.body;
-    users.push({ id: users.length + 1, name, email });
-    res.status(201).send('Kullanıcı oluşturuldu');
-});
- */

@@ -6,6 +6,7 @@ import cors from 'cors';
 import supplierRoutes from "./routes/suppliers";
 import purchaseRoutes from "./routes/purchaseResults";
 import criteriaWeightsRoutes from "./routes/criteriaWeights";
+import productsRoutes from "./routes/products";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use('/api', userRoutes);
 app.use('/api', supplierRoutes);
 app.use('/api', purchaseRoutes);
 app.use('/api', criteriaWeightsRoutes);
+app.use('/api', productsRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

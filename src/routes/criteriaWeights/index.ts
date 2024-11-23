@@ -16,7 +16,7 @@ router.post('/criteriaWeight', async (req, res) => {
     }
 
     try {
-        console.log('Received body:', req.body); // Gelen veri kontrol
+        console.log('Received body:', req.body);
         const query = `
             INSERT INTO CriteriaWeight (ProID, ReliabilityScore, PriceScore, DeliveryTimeScore, WarrantyScore, ComplianceScore) VALUES (?, ?, ?, ?, ?, ?)
         `;
