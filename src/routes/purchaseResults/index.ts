@@ -23,4 +23,17 @@ router.post('/purchase', async (req, res) => {
     }
 });
 
+router.get('/purchase', (req, res) => {
+    const connection = createConnection();
+    connection.query('SELECT * FROM purchase', (err, results) => {
+        if (err) {
+            res.status(500).json({ error: 'Database error' });
+            console.log('Error fetching users:', err);
+        } else {
+            res.json(results);
+        }
+    });
+    connection.end();
+});
+
 export default router;
