@@ -15,19 +15,23 @@ export class Purchase {
   id: string;
 
   @Column()
-  purchaseDate: string;
+  purchaseDate: Date;
+
+  @Column({ nullable: true }) //change after adding user
+  userId: string;
 
   @ManyToOne(() => User, (user) => user.purchases)
   @JoinColumn({ name: 'userId' })
   user: User;
 
-}
-/*
- @ManyToOne(() => Product, (product) => product.purchases)
+  @ManyToOne(() => Product, (product) => product.purchases)
   @JoinColumn({ name: 'productId' })
   product: Product;
 
   @ManyToOne(() => Supplier, (supplier) => supplier.purchases)
   @JoinColumn({ name: 'supplierId' })
   supplier: Supplier;
- */
+
+}
+
+

@@ -12,7 +12,8 @@ export class PurchaseController {
   }
 
   @Post()
-  async create(@Body() purchaseData: Purchase): Promise<Purchase> {
-    return this.purchaseService.create(purchaseData);
+  async createPurchase(@Body() body: { userId: string; productId: string; supplierId: string }) {
+    const { userId, productId, supplierId } = body;
+    return this.purchaseService.createPurchase(userId, productId, supplierId);
   }
 }
