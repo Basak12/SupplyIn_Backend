@@ -1,1 +1,0 @@
-//Entity'nin yolunu yönet

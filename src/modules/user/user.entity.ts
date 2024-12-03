@@ -1,23 +1,26 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Purchase } from '../purchase/purchase.entity';
 
-@Entity()
+@Entity('users')
 export class User {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: string;
 
-    @Column()
-    email: string;
+  @Column()
+  name: string;
 
-    @Column()
-    password: string;
+  @Column()
+  surname: string;
 
-    @Column()
-    name: string;
+  @Column({ unique: true })
+  email: string;
 
-    @Column()
-    surname: string;
+  @Column()
+  password: string;
 
-    /*
-    @OneToMany(() => Post, post => post.user)
-     */
+  @Column({ default: true })
+  isActive: boolean;
+
+  @OneToMany(() => Purchase, (purchase) => purchase.user)
+  purchases: Purchase[];
 }
