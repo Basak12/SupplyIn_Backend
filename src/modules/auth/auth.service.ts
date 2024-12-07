@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {HttpException, Injectable, UnauthorizedException, HttpStatus} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
@@ -11,15 +11,33 @@ export class AuthService {
         private jwtService: JwtService,
     ) {}
 
+    async register(userData: Partial<User>) {
+        const { email, password, name, surname } = userData;
+
+        if (!email || !password || !name || !surname) {
+            throw new HttpException('All fields (email, password, name) are required', HttpStatus.BAD_REQUEST);
+        }
+
+        return this.userService.createUser(email, password, name, surname);
+    }
+
+
+    async login(user: User) {
+        const payload = { email: user.email, sub: user.id };
+        return {
+            access_token: this.jwtService.sign(payload),
+        };
+    }
     async validateUser(email: string, password: string): Promise<any> {
         const user = await this.userService.findByEmail(email);
 
         if (!user) {
-            // Kullanıcı bulunamazsa UnauthorizedException fırlat
             throw new UnauthorizedException('No user found');
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        console.log('isPasswordValid', isPasswordValid);
 
         if (!isPasswordValid) {
             // Şifre eşleşmezse UnauthorizedException fırlat
@@ -30,15 +48,4 @@ export class AuthService {
         return result;
     }
 
-    async login(user: User) {
-        const payload = { email: user.email, sub: user.id };
-        return {
-            access_token: this.jwtService.sign(payload),
-        };
-    }
-
-    async register(user: User) {
-        const hashedPassword = await bcrypt.hash(user.password, 10);
-        return this.userService.create({ ...user, password: hashedPassword });
-    }
 }

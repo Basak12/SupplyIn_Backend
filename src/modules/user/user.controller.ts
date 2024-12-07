@@ -35,11 +35,17 @@ export class UserController {
   @Post()
   async create(@Body() userData: Partial<User>) {
     try {
-      return await this.userService.create(userData);
+      const { email, password, name, surname } = userData;
+
+      if (!email || !password) {
+        throw new HttpException('Email and password are required', HttpStatus.BAD_REQUEST);
+      }
+
+      return await this.userService.createUser(email, password, name, surname)
     } catch (error) {
       throw new HttpException(
-        `Failed to create user: ${error.message}`,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+          `Failed to create user: ${error.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }
