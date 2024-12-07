@@ -1,5 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Purchase } from '../purchase/purchase.entity';
+import * as bcrypt from 'bcrypt';
+import { BeforeInsert } from 'typeorm';
 
 @Entity('users')
 export class User {
@@ -23,4 +25,9 @@ export class User {
 
   @OneToMany(() => Purchase, (purchase) => purchase.user)
   purchases: Purchase[];
+
+  @BeforeInsert()
+  async hashPassword() {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
 }

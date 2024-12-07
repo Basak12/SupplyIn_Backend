@@ -31,4 +31,14 @@ export class UserService {
 
     return user.purchases;
   }
+
+  async findByEmail(email: string): Promise<User | null> {
+    const user = await this.userRepository.findOne({ where: { email } });
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
+  }
 }
