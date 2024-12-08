@@ -8,6 +8,7 @@ import { SupplierModule } from './modules/supplier/supplier.module';
 import { ProductModule } from './modules/product/product.module';
 import { PurchaseModule } from './modules/purchase/purchase.module';
 import { AuthModule } from './modules/auth/auth.module';
+import {CriteriaWeightModule} from "./modules/criteriaWeight/criteriaWeight.module";
 
 @Module({
   imports: [
@@ -29,12 +30,12 @@ import { AuthModule } from './modules/auth/auth.module';
       }),
       inject: [ConfigService],
     }),
-
     UserModule,
     SupplierModule,
     ProductModule,
     PurchaseModule,
     AuthModule,
+    CriteriaWeightModule
   ],
   controllers: [AppController],
   providers: [AppService],

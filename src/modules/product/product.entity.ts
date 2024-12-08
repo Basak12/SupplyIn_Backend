@@ -36,5 +36,4 @@ export class Product {
 
   @OneToMany(() => Purchase, (purchase) => purchase.product)
   purchases: Purchase[];
-
 }

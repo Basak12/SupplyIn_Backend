@@ -10,4 +10,8 @@ export class SupplierController {
   async findAll(): Promise<Supplier[]> {
     return this.supplierService.findAll();
   }
+  @Get('product/:productId')
+    async getSuppliersByProduct(productId: string) {
+        return this.supplierService.getSuppliersByProduct(productId);
+    }
 }
