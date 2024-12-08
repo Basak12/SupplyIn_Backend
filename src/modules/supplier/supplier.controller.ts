@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import {Controller, Get, Query} from '@nestjs/common';
 import { SupplierService } from './supplier.service';
 import { Supplier } from './supplier.entity';
 
@@ -10,8 +10,9 @@ export class SupplierController {
   async findAll(): Promise<Supplier[]> {
     return this.supplierService.findAll();
   }
-  @Get('product/:productId')
-    async getSuppliersByProduct(productId: string) {
-        return this.supplierService.getSuppliersByProduct(productId);
-    }
+  @Get('product')
+  async getSuppliersByProduct(@Query('productId') productId: string) {
+    return this.supplierService.getSuppliersByProduct(productId);
+  }
+
 }

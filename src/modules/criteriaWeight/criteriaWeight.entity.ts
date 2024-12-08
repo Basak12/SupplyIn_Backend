@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn} from 'typeorm';
+import {Product} from "../product/product.entity";
 
 @Entity()
 export class CriteriaWeight {
@@ -25,4 +26,5 @@ export class CriteriaWeight {
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     timeStamp: Date;
+
 }
