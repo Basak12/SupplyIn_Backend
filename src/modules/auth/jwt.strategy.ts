@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
+import {AuthGuard, PassportStrategy} from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
 @Injectable()
@@ -8,11 +8,16 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
-            secretOrKey: 'your_secret_key',
+            secretOrKey: process.env.JWT_SECRET || 'yourSecretKey',
         });
     }
 
     async validate(payload: any) {
-        return { userId: payload.sub, email: payload.email };
+        return { id: payload.sub, email: payload.email }; // Kullanıcı bilgilerini döndür
     }
 }
+
+
+@Injectable()
+export class JwtAuthGuard extends AuthGuard('jwt') {}
+

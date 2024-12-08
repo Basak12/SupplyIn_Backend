@@ -25,7 +25,6 @@ export class UserService {
       isActive: true
     });
 
-    console.log('User created:', user);
     return user;
   }
 

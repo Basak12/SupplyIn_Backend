@@ -1,6 +1,16 @@
-import {Body, Controller, Post, Get, UseGuards, UnauthorizedException, HttpException, HttpStatus} from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Post,
+    Get,
+    UseGuards,
+    UnauthorizedException,
+    HttpException,
+    HttpStatus,
+    Req
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { JwtStrategy } from './jwt.strategy';
+import {JwtAuthGuard, JwtStrategy} from './jwt.strategy';
 import {User} from "../user/user.entity";
 
 @Controller('auth')
@@ -33,13 +43,27 @@ export class AuthController {
 
         try {
             const user = await this.authService.validateUser(email, password);
-            return this.authService.login(user);
+            const { access_token } = await this.authService.login(user);
+            return {
+                access_token: access_token, // Yanıtın JSON formatında olduğundan emin olun
+                user,
+            };
         } catch (error) {
             console.log('error', error);
             throw new UnauthorizedException('Invalid credentials');
         }
     }
 
+    @UseGuards(JwtAuthGuard) // JWT doğrulama mekanizmasını kullan
+    @Get('verify')
+    verify(@Req() req: Request) {
+        // @ts-ignore
+        const user = req.user; // JWT Strategy içinde belirlenen user
+        return {
+            success: true,
+            user,
+        };
+    }
 
     @UseGuards(JwtStrategy)
     @Get('protected-route')

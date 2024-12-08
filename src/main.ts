@@ -7,11 +7,11 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   app.enableCors({
-    origin: configService.get<string>('FRONTEND_URL'), // .env dosyasından okuyabilir
+    origin: configService.get<string>('FRONTEND_URL'),
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
 
-  await app.listen(configService.get<number>('PORT') || 3000);
+  await app.listen(configService.get<number>('PORT') || 5050);
 }
 bootstrap();

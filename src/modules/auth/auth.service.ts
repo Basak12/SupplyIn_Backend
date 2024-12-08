@@ -40,7 +40,6 @@ export class AuthService {
         console.log('isPasswordValid', isPasswordValid);
 
         if (!isPasswordValid) {
-            // Şifre eşleşmezse UnauthorizedException fırlat
             throw new UnauthorizedException('Incorrect password');
         }
 
