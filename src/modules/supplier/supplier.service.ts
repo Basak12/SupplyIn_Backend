@@ -18,10 +18,11 @@ export class SupplierService {
     return this.supplierRepository.find();
   }
     async getSuppliersByProduct(productId: string) {
+      console.log('backend', productId);
         return this.productRepository
             .createQueryBuilder('product')
-            .innerJoinAndSelect('product.supplier', 'supplier')  // Product ile Supplier ilişkisinin alınması
-            .where('product.id = :productId', { productId })  // Ürün ID'si ile filtreleme
+            .innerJoinAndSelect('product.supplier', 'supplier')
+            .where('product.id = :productId', { productId })
             .select([
                 'supplier.id AS supplierId',
                 'supplier.name AS supplierName',
