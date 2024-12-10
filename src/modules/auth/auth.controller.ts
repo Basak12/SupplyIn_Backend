@@ -38,9 +38,6 @@ export class AuthController {
     @Post('login')
     async login(@Body() loginData: { email: string; password: string }) {
         const { email, password } = loginData;
-
-        console.log('login data', loginData);
-
         try {
             const user = await this.authService.validateUser(email, password);
             const { access_token } = await this.authService.login(user);
@@ -53,12 +50,13 @@ export class AuthController {
             throw new UnauthorizedException('Invalid credentials');
         }
     }
-
-    @UseGuards(JwtAuthGuard) // JWT doğrulama mekanizmasını kullan
+  /*
+    @UseGuards(JwtAuthGuard)
     @Get('verify')
     verify(@Req() req: Request) {
+        console.log('Received Authorization Header:', req.headers['authorization']); // Header'ı kontrol et
         // @ts-ignore
-        const user = req.user; // JWT Strategy içinde belirlenen user
+        const user = req.user;
         return {
             success: true,
             user,
@@ -70,4 +68,6 @@ export class AuthController {
     getProtectedRoute() {
         return { message: 'This is a protected route' };
     }
+
+   */
 }

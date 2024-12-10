@@ -32,6 +32,12 @@ export class UserController {
     return { purchases };
   }
 
+  @Get(':id')
+    async getUser(@Param('id') id: string) {
+        const user = await this.userService.findById(id);
+        return { user };
+    }
+
   @Post()
   async create(@Body() userData: Partial<User>) {
     try {

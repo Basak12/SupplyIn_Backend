@@ -21,7 +21,6 @@ export class AuthService {
         return this.userService.createUser(email, password, name, surname);
     }
 
-
     async login(user: User) {
         const payload = { email: user.email, sub: user.id };
         return {
@@ -34,10 +33,7 @@ export class AuthService {
         if (!user) {
             throw new UnauthorizedException('No user found');
         }
-
         const isPasswordValid = await bcrypt.compare(password, user.password);
-
-        console.log('isPasswordValid', isPasswordValid);
 
         if (!isPasswordValid) {
             throw new UnauthorizedException('Incorrect password');
