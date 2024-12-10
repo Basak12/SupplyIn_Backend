@@ -12,8 +12,15 @@ export class PurchaseController {
   }
 
   @Post()
-  async createPurchase(@Body() body: { userId: string; productId: string; supplierId: string }) {
-    const { userId, productId, supplierId } = body;
-    return this.purchaseService.createPurchase(userId, productId, supplierId);
+  async createPurchase(
+  @Body() body: { userId: string; productId: string; supplierId: string; supplierScore: number }
+  ): Promise<Purchase> {
+    const { userId, productId, supplierId, supplierScore } = body;
+
+    if (!userId || !productId || !supplierId || supplierScore == null) {
+      throw new Error('Missing required fields');
+    }
+
+    return this.purchaseService.createPurchase(userId, productId, supplierId, supplierScore);
   }
 }

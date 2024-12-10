@@ -6,7 +6,7 @@ export declare class UserService {
     findAll(): Promise<User[]>;
     createUser(email: string, password: string, name: string, surname: string): Promise<{
         email: string;
-        password: string;
+        password: any;
         name: string;
         surname: string;
         isActive: true;

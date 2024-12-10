@@ -6,5 +6,6 @@ export declare class SupplierService {
     private productRepository;
     constructor(supplierRepository: Repository<Supplier>, productRepository: Repository<Product>);
     findAll(): Promise<Supplier[]>;
-    getSuppliersByProduct(productId: string): Promise<any[]>;
+    getSuppliersByProductId(productId: string): Promise<any[]>;
+    getSuppliersByProductName(productName: string): Promise<any[]>;
 }

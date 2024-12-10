@@ -23,8 +23,11 @@ let PurchaseController = class PurchaseController {
         return this.purchaseService.findAll();
     }
     async createPurchase(body) {
-        const { userId, productId, supplierId } = body;
-        return this.purchaseService.createPurchase(userId, productId, supplierId);
+        const { userId, productId, supplierId, supplierScore } = body;
+        if (!userId || !productId || !supplierId || supplierScore == null) {
+            throw new Error('Missing required fields');
+        }
+        return this.purchaseService.createPurchase(userId, productId, supplierId, supplierScore);
     }
 };
 exports.PurchaseController = PurchaseController;

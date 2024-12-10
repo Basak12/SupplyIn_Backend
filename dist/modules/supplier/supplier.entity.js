@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Supplier = void 0;
 const typeorm_1 = require("typeorm");
 const purchase_entity_1 = require("../purchase/purchase.entity");
+const product_entity_1 = require("../product/product.entity");
 let Supplier = class Supplier {
 };
 exports.Supplier = Supplier;
@@ -27,6 +28,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Supplier.prototype, "contactInfo", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => product_entity_1.Product, (product) => product.supplier),
+    __metadata("design:type", Array)
+], Supplier.prototype, "products", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => purchase_entity_1.Purchase, (purchase) => purchase.supplier),
     __metadata("design:type", Array)

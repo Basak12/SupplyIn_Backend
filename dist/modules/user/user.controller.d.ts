@@ -12,7 +12,7 @@ export declare class UserController {
     }>;
     create(userData: Partial<User>): Promise<{
         email: string;
-        password: string;
+        password: any;
         name: string;
         surname: string;
         isActive: true;

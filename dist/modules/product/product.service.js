@@ -34,6 +34,24 @@ let ProductService = class ProductService {
         }
         return product;
     }
+    async getSuppliersByProductName(productName) {
+        console.log('backend', productName);
+        return this.productRepository
+            .createQueryBuilder('product')
+            .innerJoinAndSelect('product.supplier', 'supplier')
+            .where('product.name = :productName', { productName })
+            .select([
+            'supplier.id AS supplierId',
+            'supplier.name AS supplierName',
+            'supplier.contactInfo AS contactInfo',
+            'product.price AS price',
+            'product.deliveryTimeWeeks AS deliveryTimeWeeks',
+            'product.warranty AS warranty',
+            'product.safetyRegulationsCompliance AS compliance',
+            'product.reliability AS reliability',
+        ])
+            .getRawMany();
+    }
 };
 exports.ProductService = ProductService;
 exports.ProductService = ProductService = __decorate([

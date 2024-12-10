@@ -20,6 +20,9 @@ export class Purchase {
   @Column({ nullable: true }) //change after adding user
   userId: string;
 
+  @Column('float')
+  supplierScore: number;
+
   @ManyToOne(() => User, (user) => user.purchases)
   @JoinColumn({ name: 'userId' })
   user: User;

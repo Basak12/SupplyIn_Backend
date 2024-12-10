@@ -5,4 +5,5 @@ export declare class ProductController {
     constructor(productService: ProductService);
     getProductDetails(productId: string): Promise<Product>;
     findAll(): Promise<Product[]>;
+    getSuppliersByProductName(productName: string): Promise<any[]>;
 }

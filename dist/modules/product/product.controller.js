@@ -25,6 +25,9 @@ let ProductController = class ProductController {
     async findAll() {
         return this.productService.findAll();
     }
+    async getSuppliersByProductName(productName) {
+        return this.productService.getSuppliersByProductName(productName);
+    }
 };
 exports.ProductController = ProductController;
 __decorate([
@@ -40,6 +43,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)(':productName/suppliers'),
+    __param(0, (0, common_1.Param)('productName')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "getSuppliersByProductName", null);
 exports.ProductController = ProductController = __decorate([
     (0, common_1.Controller)('products'),
     __metadata("design:paramtypes", [product_service_1.ProductService])

@@ -5,4 +5,5 @@ export declare class ProductService {
     constructor(productRepository: Repository<Product>);
     findAll(): Promise<Product[]>;
     getProductDetails(productId: string): Promise<Product>;
+    getSuppliersByProductName(productName: string): Promise<any[]>;
 }

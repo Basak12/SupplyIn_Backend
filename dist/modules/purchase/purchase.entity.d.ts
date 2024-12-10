@@ -5,6 +5,7 @@ export declare class Purchase {
     id: string;
     purchaseDate: Date;
     userId: string;
+    supplierScore: number;
     user: User;
     product: Product;
     supplier: Supplier;

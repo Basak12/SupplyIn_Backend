@@ -25,13 +25,29 @@ export class PurchaseService {
     const purchase = this.purchaseRepository.create(purchaseData);
     return this.purchaseRepository.save(purchase);
   }
-  async createPurchase(userId: string, productId: string, supplierId: string) {
+  async createPurchase(
+      userId: string,
+      productId: string,
+      supplierId: string,
+      supplierScore: number
+  ) {
     const user = await this.userRepository.findOneBy({ id: userId });
-    const product = await this.productRepository.findOneBy({ id: productId });
-    const supplier = await this.supplierRepository.findOneBy({ id: supplierId });
+    if (!user) {
+      throw new Error('User not found');
+    }
 
-    if (!user || !product || !supplier) {
-      throw new Error('Invalid user, product, or supplier');
+    const product = await this.productRepository.findOneBy({ id: productId });
+    if (!product) {
+      throw new Error('Product not found');
+    }
+
+    const supplier = await this.supplierRepository.findOneBy({ id: supplierId });
+    if (!supplier) {
+      throw new Error('Supplier not found');
+    }
+
+    if (!supplierScore || supplierScore <= 0) {
+      throw new Error('Invalid supplier score');
     }
 
     const purchase = this.purchaseRepository.create({
@@ -39,9 +55,11 @@ export class PurchaseService {
       user,
       product,
       supplier,
+      supplierScore,
     });
 
-    return this.purchaseRepository.save(purchase);
+    return await this.purchaseRepository.save(purchase);
   }
+
 
 }

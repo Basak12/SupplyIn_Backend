@@ -26,7 +26,7 @@ let SupplierService = class SupplierService {
     async findAll() {
         return this.supplierRepository.find();
     }
-    async getSuppliersByProduct(productId) {
+    async getSuppliersByProductId(productId) {
         console.log('backend', productId);
         return this.productRepository
             .createQueryBuilder('product')
@@ -42,6 +42,24 @@ let SupplierService = class SupplierService {
             'product.safetyRegulationsCompliance AS compliance',
             'product.reliability AS reliability',
             'product.price AS price',
+        ])
+            .getRawMany();
+    }
+    async getSuppliersByProductName(productName) {
+        console.log('backend', productName);
+        return this.productRepository
+            .createQueryBuilder('product')
+            .innerJoinAndSelect('product.supplier', 'supplier')
+            .where('product.name = :productName', { productName })
+            .select([
+            'supplier.id AS supplierId',
+            'supplier.name AS supplierName',
+            'supplier.contactInfo AS contactInfo',
+            'product.price AS price',
+            'product.deliveryTimeWeeks AS deliveryTimeWeeks',
+            'product.warranty AS warranty',
+            'product.safetyRegulationsCompliance AS compliance',
+            'product.reliability AS reliability',
         ])
             .getRawMany();
     }

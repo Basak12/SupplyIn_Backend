@@ -22,8 +22,8 @@ let SupplierController = class SupplierController {
     async findAll() {
         return this.supplierService.findAll();
     }
-    async getSuppliersByProduct(productId) {
-        return this.supplierService.getSuppliersByProduct(productId);
+    async getSuppliersByProductId(productId) {
+        return this.supplierService.getSuppliersByProductId(productId);
     }
 };
 exports.SupplierController = SupplierController;
@@ -39,7 +39,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], SupplierController.prototype, "getSuppliersByProduct", null);
+], SupplierController.prototype, "getSuppliersByProductId", null);
 exports.SupplierController = SupplierController = __decorate([
     (0, common_1.Controller)('suppliers'),
     __metadata("design:paramtypes", [supplier_service_1.SupplierService])

@@ -4,5 +4,5 @@ export declare class SupplierController {
     private readonly supplierService;
     constructor(supplierService: SupplierService);
     findAll(): Promise<Supplier[]>;
-    getSuppliersByProduct(productId: string): Promise<any[]>;
+    getSuppliersByProductId(productId: string): Promise<any[]>;
 }

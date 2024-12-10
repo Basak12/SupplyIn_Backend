@@ -10,7 +10,7 @@ async function bootstrap() {
     origin: configService.get<string>('FRONTEND_URL'),
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
-    allowedHeaders: 'Content-Type, Authorization', // Authorization header'ını izin ver
+    allowedHeaders: 'Content-Type, Authorization',
   });
 
   await app.listen(configService.get<number>('PORT') || 5050);

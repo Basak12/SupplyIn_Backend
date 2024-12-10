@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typeorm_1 = require("typeorm");
 const purchase_entity_1 = require("../purchase/purchase.entity");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const typeorm_2 = require("typeorm");
 let User = class User {
     async hashPassword() {

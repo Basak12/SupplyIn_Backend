@@ -7,7 +7,7 @@ export declare class AuthService {
     constructor(userService: UserService, jwtService: JwtService);
     register(userData: Partial<User>): Promise<{
         email: string;
-        password: string;
+        password: any;
         name: string;
         surname: string;
         isActive: true;

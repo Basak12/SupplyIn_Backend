@@ -11,8 +11,7 @@ export class SupplierController {
     return this.supplierService.findAll();
   }
   @Get('product')
-  async getSuppliersByProduct(@Query('productId') productId: string) {
-    return this.supplierService.getSuppliersByProduct(productId);
+  async getSuppliersByProductId(@Query('productId') productId: string) {
+    return this.supplierService.getSuppliersByProductId(productId);
   }
-
 }

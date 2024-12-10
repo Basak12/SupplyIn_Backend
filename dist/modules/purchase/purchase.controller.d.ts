@@ -8,5 +8,6 @@ export declare class PurchaseController {
         userId: string;
         productId: string;
         supplierId: string;
+        supplierScore: number;
     }): Promise<Purchase>;
 }
