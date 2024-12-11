@@ -29,7 +29,7 @@ export class AuthController {
             return await this.authService.register(userData);
         } catch (error) {
             throw new HttpException(
-                `Failed to create user: ${error.message}`,
+                `Failed to create user: ${error}`,
                 HttpStatus.INTERNAL_SERVER_ERROR,
             );
         }

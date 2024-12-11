@@ -50,7 +50,7 @@ export class UserController {
       return await this.userService.createUser(email, password, name, surname)
     } catch (error) {
       throw new HttpException(
-          `Failed to create user: ${error.message}`,
+          `Failed to create user: ${error}`,
           HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
