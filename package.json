@@ -11,7 +11,7 @@
     "typeorm:generate": "typeorm migration:generate",
     "typeorm:run": "typeorm migration:run",
     "typeorm:revert": "typeorm migration:revert",
-    "build": "nest build",
+    "build": "nest src/build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
