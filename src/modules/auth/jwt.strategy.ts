@@ -9,38 +9,37 @@ import {JwtService} from "@nestjs/jwt";
 export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor(
         private readonly userService: UserService,
-        private readonly configService: ConfigService,  // ConfigService kullanarak JWT_SECRET alıyoruz
+        private readonly configService: ConfigService,
     ) {
         super({
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),  // Token'ı Authorization header'ından al
-            secretOrKey: configService.get('JWT_SECRET'),  // JWT Secret burada kullanılıyor
-            ignoreExpiration: false,  // Token'ın süresi dolmuşsa geçersiz sayılacak
+            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            secretOrKey: configService.get('JWT_SECRET'),
+            ignoreExpiration: false,
         });
     }
 
     async validate(payload: any) {
         console.log('Payload doğrulandı:', payload); // Debug log
-        const user = await this.userService.findById(payload.sub); // Kullanıcıyı kontrol et
+        const user = await this.userService.findById(payload.sub);
         if (!user) {
-            throw new UnauthorizedException('Kullanıcı bulunamadı'); // Kullanıcı yoksa hata
+            throw new UnauthorizedException('Kullanıcı bulunamadı');
         }
-        return user; // Kullanıcı bilgilerini döndür
+        return user;
     }
 
 
     async validateUser(payload: any) {
-        return { id: payload.sub, email: payload.email }; // Kullanıcı bilgilerini döndür
+        return { id: payload.sub, email: payload.email };
     }
 
     async validateToken(payload: any) {
-        const user = await this.userService.findById(payload.sub); // Token'daki 'sub' kullanılarak kullanıcıyı bul
+        const user = await this.userService.findById(payload.sub);
         if (!user) {
             throw new UnauthorizedException('Invalid token');
         }
-        return user;  // Eğer kullanıcı geçerliyse, kullanıcı bilgileri döner
+        return user;
     }
 }
-
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {

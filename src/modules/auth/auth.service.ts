@@ -17,7 +17,6 @@ export class AuthService {
         if (!email || !password || !name || !surname) {
             throw new HttpException('All fields (email, password, name) are required', HttpStatus.BAD_REQUEST);
         }
-
         return this.userService.createUser(email, password, name, surname);
     }
 

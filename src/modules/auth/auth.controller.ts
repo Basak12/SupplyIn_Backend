@@ -42,7 +42,7 @@ export class AuthController {
             const user = await this.authService.validateUser(email, password);
             const { access_token } = await this.authService.login(user);
             return {
-                access_token: access_token, // Yanıtın JSON formatında olduğundan emin olun
+                access_token: access_token,
                 user,
             };
         } catch (error) {
@@ -53,16 +53,14 @@ export class AuthController {
 
     @UseGuards(JwtAuthGuard)
     @Get('verify')
-    verify(@Req() req: Request) {
-        console.log('Received Authorization Header:', req.headers['authorization']);
-        // @ts-ignore
+    verify(@Req() req: any) {
+        console.log('req', req.user)
         const user = req.user;
         return {
             success: true,
             user,
         };
     }
-
 
     @UseGuards(JwtStrategy)
     @Get('protected-route')

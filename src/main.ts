@@ -26,6 +26,6 @@ async function bootstrap() {
     console.error('React build dosyaları bulunamadı:', error);
   }
 
-  await app.listen(configService.get<number>('PORT') || 3000);
+  await app.listen(configService.get<number>('PORT') || 5050);
 }
 bootstrap();
