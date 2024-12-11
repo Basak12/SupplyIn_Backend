@@ -15,17 +15,17 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Authorization',
   });
 
-  const frontendBuildPath = join(__dirname, '..', 'frontend', 'build');
+  //const frontendBuildPath = join(__dirname, '..', 'frontend', 'build');
 
   try {
-    app.use(express.static(frontendBuildPath));
-    app.use('*', (req, res) => {
-      res.sendFile(join(frontendBuildPath, 'index.html'));
-    });
+    //app.use(express.static(frontendBuildPath));
+    //app.use('*', (req, res) => {
+    //  res.sendFile(join(frontendBuildPath, 'index.html'));
+    //});
   } catch (error) {
     console.error('React build dosyaları bulunamadı:', error);
   }
 
-  await app.listen(configService.get<number>('PORT'));
+  await app.listen(configService.get<number>('PORT') || 3000);
 }
 bootstrap();
