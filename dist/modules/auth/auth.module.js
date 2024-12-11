@@ -14,17 +14,23 @@ const jwt_1 = require("@nestjs/jwt");
 const passport_1 = require("@nestjs/passport");
 const jwt_strategy_1 = require("./jwt.strategy");
 const auth_controller_1 = require("./auth.controller");
+const config_1 = require("@nestjs/config");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
 exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            config_1.ConfigModule,
             user_module_1.UserModule,
             passport_1.PassportModule,
-            jwt_1.JwtModule.register({
-                secret: 'your_secret_key',
-                signOptions: { expiresIn: '1h' },
+            jwt_1.JwtModule.registerAsync({
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: (configService) => ({
+                    secret: configService.get('JWT_SECRET'),
+                    signOptions: { expiresIn: '1h' },
+                }),
             }),
         ],
         controllers: [auth_controller_1.AuthController],

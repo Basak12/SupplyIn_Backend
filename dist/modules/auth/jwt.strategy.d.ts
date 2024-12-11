@@ -1,3 +1,4 @@
+import { ExecutionContext } from '@nestjs/common';
 import { Strategy } from 'passport-jwt';
 import { UserService } from "../user/user.service";
 import { ConfigService } from "@nestjs/config";
@@ -6,6 +7,7 @@ export declare class JwtStrategy extends JwtStrategy_base {
     private readonly userService;
     private readonly configService;
     constructor(userService: UserService, configService: ConfigService);
+    validate(payload: any): Promise<import("../user/user.entity").User>;
     validateUser(payload: any): Promise<{
         id: any;
         email: any;
@@ -14,5 +16,6 @@ export declare class JwtStrategy extends JwtStrategy_base {
 }
 declare const JwtAuthGuard_base: import("@nestjs/passport").Type<import("@nestjs/passport").IAuthGuard>;
 export declare class JwtAuthGuard extends JwtAuthGuard_base {
+    canActivate(context: ExecutionContext): boolean | Promise<boolean> | import("rxjs").Observable<boolean>;
 }
 export {};

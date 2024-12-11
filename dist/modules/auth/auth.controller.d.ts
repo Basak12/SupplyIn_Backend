@@ -17,4 +17,11 @@ export declare class AuthController {
         access_token: string;
         user: any;
     }>;
+    verify(req: Request): {
+        success: boolean;
+        user: any;
+    };
+    getProtectedRoute(): {
+        message: string;
+    };
 }

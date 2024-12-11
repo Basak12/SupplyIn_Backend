@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
+const jwt_strategy_1 = require("./jwt.strategy");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
@@ -46,6 +47,17 @@ let AuthController = class AuthController {
             throw new common_1.UnauthorizedException('Invalid credentials');
         }
     }
+    verify(req) {
+        console.log('Received Authorization Header:', req.headers['authorization']);
+        const user = req.user;
+        return {
+            success: true,
+            user,
+        };
+    }
+    getProtectedRoute() {
+        return { message: 'This is a protected route' };
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
@@ -62,6 +74,21 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "login", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_strategy_1.JwtAuthGuard),
+    (0, common_1.Get)('verify'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Request]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "verify", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_strategy_1.JwtStrategy),
+    (0, common_1.Get)('protected-route'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "getProtectedRoute", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])

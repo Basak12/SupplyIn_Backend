@@ -25,6 +25,14 @@ let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(pas
         this.userService = userService;
         this.configService = configService;
     }
+    async validate(payload) {
+        console.log('Payload doğrulandı:', payload);
+        const user = await this.userService.findById(payload.sub);
+        if (!user) {
+            throw new common_1.UnauthorizedException('Kullanıcı bulunamadı');
+        }
+        return user;
+    }
     async validateUser(payload) {
         return { id: payload.sub, email: payload.email };
     }
@@ -43,6 +51,10 @@ exports.JwtStrategy = JwtStrategy = __decorate([
         config_1.ConfigService])
 ], JwtStrategy);
 let JwtAuthGuard = class JwtAuthGuard extends (0, passport_1.AuthGuard)('jwt') {
+    canActivate(context) {
+        console.log('JwtAuthGuard çalıştı');
+        return super.canActivate(context);
+    }
 };
 exports.JwtAuthGuard = JwtAuthGuard;
 exports.JwtAuthGuard = JwtAuthGuard = __decorate([

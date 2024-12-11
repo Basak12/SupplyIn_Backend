@@ -50,11 +50,11 @@ export class AuthController {
             throw new UnauthorizedException('Invalid credentials');
         }
     }
-  /*
+
     @UseGuards(JwtAuthGuard)
     @Get('verify')
     verify(@Req() req: Request) {
-        console.log('Received Authorization Header:', req.headers['authorization']); // Header'ı kontrol et
+        console.log('Received Authorization Header:', req.headers['authorization']);
         // @ts-ignore
         const user = req.user;
         return {
@@ -63,11 +63,11 @@ export class AuthController {
         };
     }
 
+
     @UseGuards(JwtStrategy)
     @Get('protected-route')
     getProtectedRoute() {
         return { message: 'This is a protected route' };
     }
 
-   */
 }

@@ -1,4 +1,4 @@
-import {Injectable, UnauthorizedException} from '@nestjs/common';
+import {ExecutionContext, Injectable, UnauthorizedException} from '@nestjs/common';
 import {AuthGuard, PassportStrategy} from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import {UserService} from "../user/user.service";
@@ -18,6 +18,16 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         });
     }
 
+    async validate(payload: any) {
+        console.log('Payload doğrulandı:', payload); // Debug log
+        const user = await this.userService.findById(payload.sub); // Kullanıcıyı kontrol et
+        if (!user) {
+            throw new UnauthorizedException('Kullanıcı bulunamadı'); // Kullanıcı yoksa hata
+        }
+        return user; // Kullanıcı bilgilerini döndür
+    }
+
+
     async validateUser(payload: any) {
         return { id: payload.sub, email: payload.email }; // Kullanıcı bilgilerini döndür
     }
@@ -33,5 +43,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
 
 @Injectable()
-export class JwtAuthGuard extends AuthGuard('jwt') {}
+export class JwtAuthGuard extends AuthGuard('jwt') {
+    canActivate(context: ExecutionContext) {
+        console.log('JwtAuthGuard çalıştı'); // çalıştı
+        return super.canActivate(context);
+    }
+}
+
 
