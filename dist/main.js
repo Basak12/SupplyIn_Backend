@@ -14,7 +14,7 @@ async function bootstrap() {
         credentials: true,
         allowedHeaders: 'Content-Type, Authorization',
     });
-    const frontendBuildPath = (0, path_1.join)(__dirname, '..', 'frontend', 'build');
+    const frontendBuildPath = (0, path_1.join)(__dirname, '..', 'build');
     try {
         app.use(express.static(frontendBuildPath));
         app.use('*', (req, res) => {
