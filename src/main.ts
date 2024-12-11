@@ -14,13 +14,6 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Authorization',
   });
 
-  app.use((req, res, next) => {
-    if (!req.originalUrl.startsWith('/api')) { // API istekleri dışında
-      res.sendFile(path.resolve(__dirname, 'public', 'index.html')); // index.html'e yönlendir
-    } else {
-      next();
-    }
-  });
 
   await app.listen(configService.get<number>('PORT') || 5050);
 }
