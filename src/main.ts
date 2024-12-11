@@ -16,11 +16,15 @@ async function bootstrap() {
   });
 
   const frontendBuildPath = join(__dirname, '..', 'frontend', 'build');
-  app.use(express.static(frontendBuildPath));
 
-  app.use('*', (req, res) => {
-    res.sendFile(join(frontendBuildPath, 'index.html'));
-  });
+  try {
+    app.use(express.static(frontendBuildPath));
+    app.use('*', (req, res) => {
+      res.sendFile(join(frontendBuildPath, 'index.html'));
+    });
+  } catch (error) {
+    console.error('React build dosyaları bulunamadı:', error);
+  }
 
   await app.listen(configService.get<number>('PORT'));
 }
