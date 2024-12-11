@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
+import { join } from 'path';
+import * as express from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,6 +15,13 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Authorization',
   });
 
-  await app.listen(configService.get<number>('PORT') || 5050);
+  const frontendBuildPath = join(__dirname, '..', 'frontend', 'build');
+  app.use(express.static(frontendBuildPath));
+
+  app.use('*', (req, res) => {
+    res.sendFile(join(frontendBuildPath, 'index.html'));
+  });
+
+  await app.listen(configService.get<number>('PORT'));
 }
 bootstrap();
