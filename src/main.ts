@@ -1,8 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
-import { join } from 'path';
-import * as express from 'express';
+import * as path from "path";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,16 +14,13 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Authorization',
   });
 
-  //const frontendBuildPath = join(__dirname, '..', 'frontend', 'build');
-
-  try {
-    //app.use(express.static(frontendBuildPath));
-    //app.use('*', (req, res) => {
-    //  res.sendFile(join(frontendBuildPath, 'index.html'));
-    //});
-  } catch (error) {
-    console.error('React build dosyaları bulunamadı:', error);
-  }
+  app.use((req, res, next) => {
+    if (!req.originalUrl.startsWith('/api')) { // API istekleri dışında
+      res.sendFile(path.resolve(__dirname, 'public', 'index.html')); // index.html'e yönlendir
+    } else {
+      next();
+    }
+  });
 
   await app.listen(configService.get<number>('PORT') || 5050);
 }
