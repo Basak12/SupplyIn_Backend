@@ -18,7 +18,9 @@ export class PurchaseService {
   ) {}
 
   async findAll(): Promise<Purchase[]> {
-    return this.purchaseRepository.find();
+    return this.purchaseRepository.find({
+      relations: ['user', 'product', 'supplier'],
+    });
   }
 
   async create(purchaseData: Purchase): Promise<Purchase> {
