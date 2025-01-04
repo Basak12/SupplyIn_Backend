@@ -25,9 +25,9 @@ import {CriteriaWeightModule} from "./modules/criteriaWeight/criteriaWeight.modu
         username: configService.get<string>('DB_USERNAME', 'postgres'),
         password: configService.get<string>('DB_PASSWORD', 'secret'),
         database: configService.get<string>('DB_NAME', 'supplyin_db'),
-        entities: [__dirname + '/modules/**/*.entity{.ts,.js}'], // Otomatik tarama
+        entities: [__dirname + '/modules/**/*.entity{.ts,.js}'],
         ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
-        synchronize: true, // Sadece development için, production'da kapatın
+        synchronize: true,
       }),
       inject: [ConfigService],
     }),
