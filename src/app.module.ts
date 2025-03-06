@@ -9,6 +9,7 @@ import { ProductModule } from './modules/product/product.module';
 import { PurchaseModule } from './modules/purchase/purchase.module';
 import { AuthModule } from './modules/auth/auth.module';
 import {CriteriaWeightModule} from "./modules/criteriaWeight/criteriaWeight.module";
+import {SupplierProductModule} from "./modules/supplierProduct/supplierProduct.module";
 
 @Module({
   imports: [
@@ -26,8 +27,9 @@ import {CriteriaWeightModule} from "./modules/criteriaWeight/criteriaWeight.modu
         password: configService.get<string>('DB_PASSWORD', 'secret'),
         database: configService.get<string>('DB_NAME', 'supplyin_db'),
         entities: [__dirname + '/modules/**/*.entity{.ts,.js}'],
-        ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
+        //ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
         synchronize: true,
+        //logging: true,
       }),
       inject: [ConfigService],
     }),
@@ -36,7 +38,8 @@ import {CriteriaWeightModule} from "./modules/criteriaWeight/criteriaWeight.modu
     ProductModule,
     PurchaseModule,
     AuthModule,
-    CriteriaWeightModule
+    CriteriaWeightModule,
+    SupplierProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],

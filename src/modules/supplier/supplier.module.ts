@@ -5,9 +5,10 @@ import { CriteriaWeight } from '../criteriaWeight/criteriaWeight.entity'
 import { SupplierService } from './supplier.service';
 import { SupplierController } from './supplier.controller';
 import {Product} from "../product/product.entity";
+import {SupplierProduct} from "../supplierProduct/supplierProduct.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Supplier, CriteriaWeight, Product])],
+  imports: [TypeOrmModule.forFeature([Supplier, CriteriaWeight, Product, SupplierProduct])],
   providers: [SupplierService],
   controllers: [SupplierController],
 })

@@ -7,16 +7,14 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
 
-  @Get(':productId') // Route parametresi ile çalışacak
+  @Get(':productId')
   async getProductDetails(@Param('productId') productId: string): Promise<Product> {
     return this.productService.getProductDetails(productId);
   }
+
   @Get()
   async findAll(): Promise<Product[]> {
     return this.productService.findAll();
   }
-  @Get(':productName/suppliers')
-  async getSuppliersByProductName(@Param('productName') productName: string) {
-    return this.productService.getSuppliersByProductName(productName);
-  }
+
 }

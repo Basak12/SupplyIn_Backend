@@ -34,7 +34,7 @@ export class SupplierService {
                 'product.reliability AS reliability',
                 'product.price AS price',
             ])
-            .getRawMany();  // Veritabanından alınan sonuçları döner
+            .getRawMany();
     }
 
     async getSuppliersByProductName(productName: string) {
@@ -55,6 +55,4 @@ export class SupplierService {
             ])
             .getRawMany();
     }
-
-
 }

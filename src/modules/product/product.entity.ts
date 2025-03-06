@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 import { Supplier } from '../supplier/supplier.entity';
 import {Purchase} from "../purchase/purchase.entity";
+import {SupplierProduct} from "../supplierProduct/supplierProduct.entity";
 
 @Entity()
 export class Product {
@@ -16,24 +17,13 @@ export class Product {
   @Column()
   productCategory: string;
 
-  @Column()
-  price: number;
-
-  @Column()
-  warranty: string;
-
-  @Column()
-  safetyRegulationsCompliance: string;
-
-  @Column()
-  reliability: number;
-
-  @Column()
-  deliveryTimeWeeks: number;
-
   @ManyToOne(() => Supplier, (supplier) => supplier.id)
   supplier: Supplier;
 
   @OneToMany(() => Purchase, (purchase) => purchase.product)
   purchases: Purchase[];
+
+  @OneToMany(() => SupplierProduct, (supplierProduct) => supplierProduct.product)
+  supplierProducts: SupplierProduct[];
+
 }
