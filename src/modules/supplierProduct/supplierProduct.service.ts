@@ -79,7 +79,16 @@ export class SupplierProductService {
             throw new NotFoundException(`SupplierProduct with Product ID ${productId} not found`);
         }
 
-        return supplierProducts;
+        return supplierProducts.map((supplierProduct) => ({
+            id: supplierProduct.id,
+            price: supplierProduct.price,
+            deliveryTimeWeeks: supplierProduct.deliveryTimeWeeks,
+            reliability: supplierProduct.reliability,
+            warranty: supplierProduct.warranty,
+            safetyRegulationsCompliance: supplierProduct.safetyRegulationsCompliance,
+            supplier: supplierProduct.supplier,
+            product: supplierProduct.product,
+        }))
     }
 
 }
