@@ -14,13 +14,15 @@ export class SupplierProductService {
         private readonly productRepository: Repository<Product>,
         @InjectRepository(Supplier)
         private readonly supplierRepository: Repository<Supplier>,
-    ) {}
-
-    async findAll(): Promise<SupplierProduct[]> {
-        return this.supplierProductRepository.find({ relations: ['supplier', 'product']});
+    ) {
     }
 
-    async createSupplierProduct(data: { supplierId: string;
+    async findAll(): Promise<SupplierProduct[]> {
+        return this.supplierProductRepository.find({relations: ['supplier', 'product']});
+    }
+
+    async createSupplierProduct(data: {
+        supplierId: string;
         productId: string,
         price: number,
         warranty: string,
@@ -29,10 +31,10 @@ export class SupplierProductService {
         deliveryTimeWeeks: number
     }) {
         const product = await this.productRepository.findOne({
-            where: { id: data.productId },
+            where: {id: data.productId},
         });
         const supplier = await this.supplierRepository.findOne({
-            where: { id: data.supplierId },
+            where: {id: data.supplierId},
         });
 
         if (!product) {
@@ -55,31 +57,29 @@ export class SupplierProductService {
     }
 
     async getSupplierProduct(supplierProductId: string) {
-        console.log('getSupplierProduct', supplierProductId);
         const supplierProduct = await this.supplierProductRepository.findOne({
-            where: { id: supplierProductId },
+            where: {id: supplierProductId},
             relations: ['supplier', 'product'],
         });
-        if(!supplierProduct) {
+        if (!supplierProduct) {
             throw new NotFoundException(`SupplierProduct with ID ${supplierProductId} not found`);
         }
         return supplierProduct;
     }
 
+    async getSupplierProductsByProductId(productId: string) {
+        console.log('getSupplierProductsByProductId', productId);
+
+        const supplierProducts = await this.supplierProductRepository.find({
+            where: { productId },
+            relations: ['supplier', 'product'],
+        });
+
+        if (!supplierProducts.length) {
+            throw new NotFoundException(`SupplierProduct with Product ID ${productId} not found`);
+        }
+
+        return supplierProducts;
+    }
+
 }
-/*
- @Column()
-  price: number;
-
-  @Column()
-  warranty: string;
-
-  @Column()
-  safetyRegulationsCompliance: string;
-
-  @Column()
-  reliability: number;
-
-  @Column()
-  deliveryTimeWeeks: number;
- */

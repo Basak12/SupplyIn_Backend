@@ -19,7 +19,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     async validate(payload: any) {
-        console.log('Payload doğrulandı:', payload); // Debug log
         const user = await this.userService.findById(payload.sub);
         if (!user) {
             throw new UnauthorizedException('Kullanıcı bulunamadı');
@@ -44,7 +43,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
     canActivate(context: ExecutionContext) {
-        console.log('JwtAuthGuard çalıştı'); // çalıştı
         return super.canActivate(context);
     }
 }

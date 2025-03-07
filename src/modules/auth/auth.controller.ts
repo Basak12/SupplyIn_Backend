@@ -54,7 +54,6 @@ export class AuthController {
     @UseGuards(JwtAuthGuard)
     @Get('verify')
     verify(@Req() req: any) {
-        console.log('req', req.user)
         const user = req.user;
         return {
             success: true,
