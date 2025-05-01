@@ -11,13 +11,13 @@ import { Supplier } from '../supplier/supplier.entity';
 
 @Entity('purchase')
 export class Purchase {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
   purchaseDate: Date;
 
-  @Column({ nullable: true }) //change after adding user
+  @Column()
   userId: string;
 
   @Column('float')
